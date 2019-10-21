@@ -13,6 +13,7 @@
 
             {{-- TODO: Protección contra CSRF --}}
           <form action="" method="post">
+            @csrf
             <div class="form-group">
                <label for="title">Título</label>
                <input type="text" name="title" id="title" class="form-control">

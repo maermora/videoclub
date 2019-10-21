@@ -5,7 +5,7 @@
    <div class="offset-md-3 col-md-6">
       <div class="card">
          <div class="card-header text-center">
-            Modificar Pelicula
+            Modificar Pelicula {{$peliculas->title}}
          </div>
          <div class="card-body" style="padding:30px">
 
@@ -13,6 +13,7 @@
 
             {{-- TODO: Protección contra CSRF --}}
           <form action="" method="post">
+               @csrf
                {{method_field('PUT')}}
             <div class="form-group">
                <label for="title">Título</label>
@@ -55,4 +56,4 @@
    </div>
 </div>
 @stop
-<!--<h1>Modificar pelicula {{$id}} </h1> -->
+{{-- <h1>Modificar pelicula {{$id}} </h1> --}}

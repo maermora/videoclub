@@ -13,7 +13,9 @@ class CatalogController extends Controller
         return view('catalog.index', array('peliculas'=>$peliculas));
     }
     public function getShow($id){
-        return view('catalog.show', array('arrayPeliculas'=>$this->arrayPeliculas[$id]));
+        $peliculas = DB::table('movies')->where('id',$id)->first();
+        return view('catalog.show', array('peliculas'=>$peliculas));
+       // return view('catalog.show', array('arrayPeliculas'=>$this->arrayPeliculas[$id]));
         
     }
     public function getCreate(){
@@ -21,6 +23,7 @@ class CatalogController extends Controller
         
     }
     public function getEdit($id){
-        return view('catalog.edit', array('id'=>$id));     
+        $peliculas = DB::table('movies')->where('id',$id)->first();
+        return view('catalog.edit', array('peliculas'=>$peliculas));     
     }
 }
