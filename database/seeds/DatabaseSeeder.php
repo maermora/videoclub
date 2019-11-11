@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Movie;
+use App\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -103,7 +104,7 @@ class DatabaseSeeder extends Seeder
 			'title' => 'El precio del poder',
 			'year' => '1983', 
 			'director' => 'Brian De Palma', 
-			'poster' => 'https://pics.filmaffinity.com/Caracortada-798722679-large.jpg', 
+			'poster' => 'https://i.pinimg.com/originals/79/85/aa/7985aa73a6b0fb58ac657453f955ad0f.jpg', 
 			'rented' => false, 
 			'synopsis' => 'Tony Montana es un emigrante cubano frío y sanguinario que se instala en Miami con el propósito de convertirse en un gángster importante. Con la colaboración de su amigo Manny Rivera inicia una fulgurante carrera delictiva con el objetivo de acceder a la cúpula de una organización de narcos.'
 		),
@@ -176,8 +177,26 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UsersTableSeeder::class);
-        self::seedCatalog(); $this->command->info('Tabla de catalogo inicializada con datos!');
-    }
+		self::seedCatalog(); $this->command->info('Tabla de catalogo inicializada con datos!');
+		self::seedUsers(); $this->command->info('Tabla usuarios inicializada con datos!');
+	}
+	private function seedUsers(){
+		DB::table('users')->delete();
+		$user = new User;
+		$user->name = 'admin';
+		$user->email = 'admin@admin.com';
+		$user->password = bcrypt('123456789');
+		$user->save();
+		$user1 = new User;
+		$user1->name = 'admin1';
+		$user1->email = 'admin1@admin.com';
+		$user1->password = bcrypt('1234567890');
+		$user1->save();
+
+
+		
+
+	}
     private function seedCatalog(){
         DB::table('movies')->delete();
         foreach($this->arrayPeliculas as $pelicula){

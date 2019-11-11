@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Movie;
 class CatalogController extends Controller
 {
 
@@ -25,5 +26,29 @@ class CatalogController extends Controller
     public function getEdit($id){
         $peliculas = DB::table('movies')->where('id',$id)->first();
         return view('catalog.edit', array('peliculas'=>$peliculas));     
+    }
+    public function postCreate(Request $request){
+        $newMovie = new Movie;
+        $newMovie->title = $request->input('title');
+        $newMovie->year = $request->input('year');
+        $newMovie->director = $request->input('director');
+        $newMovie->poster = $request->input('poster');
+        $newMovie->synopsis = $request->input('synopsis');
+        $newMovie->save();
+        return redirect()->action('CatalogController@getIndex');
+
+
+    }
+    public function putEdit(Request $request,$id){
+        $editMovie = Movie::FindOrFail($id);
+        $editMovie->title = $request->input('title');
+        $editMovie->year = $request->input('year');
+        $editMovie->director = $request->input('director');
+        $editMovie->poster = $request->input('poster');
+        $editMovie->synopsis = $request->input('synopsis');
+        $editMovie->save();
+        return redirect()->action('CatalogController@getShow',$id);
+        
+        
     }
 }
