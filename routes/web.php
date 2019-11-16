@@ -22,6 +22,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('/catalog/create','CatalogController@postCreate');
     Route::put('/catalog/edit/{id}','CatalogController@putEdit');
+    Route::delete('/catalog/delete/{id}','CatalogController@deleteMovie');
+    Route::put('/catalog/rent/{id}','CatalogController@putRent');
+    Route::put('/catalog/return/{id}','CatalogController@putReturn');
 });
 
 Route::get('/','HomeController@getHome');

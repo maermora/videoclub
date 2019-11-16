@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Movie;
+use Notification;
 class CatalogController extends Controller
 {
 
@@ -35,8 +36,8 @@ class CatalogController extends Controller
         $newMovie->poster = $request->input('poster');
         $newMovie->synopsis = $request->input('synopsis');
         $newMovie->save();
+        notify('Pelicula creada correctamente')->type('success');
         return redirect()->action('CatalogController@getIndex');
-
 
     }
     public function putEdit(Request $request,$id){
@@ -47,8 +48,15 @@ class CatalogController extends Controller
         $editMovie->poster = $request->input('poster');
         $editMovie->synopsis = $request->input('synopsis');
         $editMovie->save();
+        notify('Pelicula editada correctamente')->type('success');
         return redirect()->action('CatalogController@getShow',$id);
-        
-        
+
+    }
+    public function putRent(Request $request,$id){
+        $rentMovie = Movie::FindOrFail($id);
+        $rentMovie->rented = '1';
+        $rentMovie->save();
+        notify('Pelicula rentada correctamente')->type('success');
+        return redirect()->action('CatalogController@getShow',$id);
     }
 }
