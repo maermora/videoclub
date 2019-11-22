@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Movie;
 
 class APICatalogController extends Controller
 {
@@ -35,6 +36,8 @@ class APICatalogController extends Controller
      */
     public function store(Request $request)
     {
+        $m = Movie::create($request->all());
+        return response()->json($m);
         //
     }
 
@@ -46,6 +49,7 @@ class APICatalogController extends Controller
      */
     public function show($id)
     {
+        return response()->json(Movie::findOrFail($id));
         //
     }
 
@@ -69,6 +73,10 @@ class APICatalogController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $m = Movie::findOrFail($id);
+        $m->fill($request->all());
+        $m->save();
+        return response()->json(['error' => false, 'msg' => 'La pelicula ha sido actualizada']);
         //
     }
 
@@ -80,13 +88,16 @@ class APICatalogController extends Controller
      */
     public function destroy($id)
     {
+        $m = Movie::findOrFail($id);
+        $m->delete();
+        return response()->json(['error' => false, 'msg' => 'La pelicula ha sido eliminada']);
         //
     }
     public function putRent($id){
         $m = Movie::findOrFail($id);
         $m->rented = 1;
         $m->save();
-        return response()->json(['error' => false, 'msg' => 'La pelicula ha sido alquilada']);
+        return response()->json(['error' => false, 'msg' => 'La pelicula ha sido rentada']);
     }
     public function putReturn($id){
         $m = Movie::findOrFail($id);
