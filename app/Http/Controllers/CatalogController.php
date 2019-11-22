@@ -59,4 +59,17 @@ class CatalogController extends Controller
         notify('Pelicula rentada correctamente')->type('success');
         return redirect()->action('CatalogController@getShow',$id);
     }
+    public function putReturn(Request $request,$id){
+        $rentMovie = Movie::FindOrFail($id);
+        $rentMovie->rented = '0';
+        $rentMovie->save();
+        notify('Pelicula devuelta correctamente')->type('success');
+        return redirect()->action('CatalogController@getShow',$id);
+    }
+    public function deleteMovie(Request $request,$id){
+        $rentMovie = Movie::FindOrFail($id);
+        $rentMovie->delete();
+        notify('Pelicula eliminada correctamente')->type('success');
+        return redirect()->action('CatalogController@getIndex');
+    }
 }
